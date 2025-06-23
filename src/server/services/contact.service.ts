@@ -103,25 +103,20 @@ const checkForDuplicateSubmission = async (email: string): Promise<void> => {
 			throw error;
 		}
 
-		// Handle specific MongoDB connection errors
 		if (error instanceof Error) {
 			const errorMessage = error.message.toLowerCase();
 
-			// SSL/TLS errors
 			if (errorMessage.includes('ssl') || errorMessage.includes('tls') || errorMessage.includes('certificate')) {
 				console.error('MongoDB SSL/TLS error during duplicate check:', error.message);
-				// Don't throw - allow submission to continue
 				return;
 			}
 
-			// Network/connection errors
 			if (
 				errorMessage.includes('network') ||
 				errorMessage.includes('connection') ||
 				errorMessage.includes('timeout')
 			) {
 				console.error('MongoDB network error during duplicate check:', error.message);
-				// Don't throw - allow submission to continue
 				return;
 			}
 		}
@@ -162,11 +157,9 @@ export const saveContactForm = async (formData: ContactFormData): Promise<{ id: 
 			timestamp: dataToSave.submittedAt,
 		};
 	} catch (error) {
-		// Handle MongoDB specific errors
 		if (error instanceof MongoServerError || error instanceof MongoNetworkError) {
 			console.error('MongoDB error:', error);
 
-			// Check for specific SSL/TLS errors
 			if (
 				error.message.includes('SSL') ||
 				error.message.includes('TLS') ||
@@ -177,7 +170,6 @@ export const saveContactForm = async (formData: ContactFormData): Promise<{ id: 
 				);
 			}
 
-			// Check for network errors
 			if (
 				error.message.includes('network') ||
 				error.message.includes('timeout') ||
