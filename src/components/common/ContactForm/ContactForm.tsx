@@ -2,7 +2,7 @@
 
 import type { ContactFormResponse } from '@/lib/interfaces/contact.interface';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import FormDecorative from '@/components/common/Decoratives/FormDecorative';
 import ModalWrapper from '@/components/common/ModalWrapper/ModalWrapper';
@@ -38,12 +38,29 @@ const ContactForm = () => {
 	const [formData, setFormData] = useState<ContactForm>(INITIAL_STATE);
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(INITIAL_STATUS);
+	const [isStatusVisible, setIsStatusVisible] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (submitStatus.type) {
+			setIsStatusVisible(true);
+
+			const timer = setTimeout(() => {
+				setIsStatusVisible(false);
+
+				setTimeout(() => {
+					setSubmitStatus(INITIAL_STATUS);
+				}, 300);
+			}, 3000);
+
+			return () => clearTimeout(timer);
+		}
+	}, [submitStatus.type]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-
 		setIsSubmitting(true);
-		setSubmitStatus({ type: null, message: '' });
+		setSubmitStatus(INITIAL_STATUS);
+		setIsStatusVisible(false);
 
 		try {
 			const response = await fetch('/api/contact', {
@@ -70,7 +87,6 @@ const ContactForm = () => {
 			}
 		} catch (error) {
 			console.error('Form submission error:', error);
-
 			setSubmitStatus({
 				type: 'error',
 				message: 'Something went wrong. Please try again later.',
@@ -189,10 +205,12 @@ const ContactForm = () => {
 							<div className="border-opacity-20 absolute top-0 right-0 h-6 w-6 border-t border-r border-[#00C9FF]/20"></div>
 						</div>
 
-						{/* Status Messages */}
+						{/* Status Messages with Fade Animation */}
 						{submitStatus.type && (
 							<div
-								className={`rounded-lg border p-4 ${
+								className={`rounded-lg border p-4 transition-all duration-300 ease-in-out ${
+									isStatusVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'
+								} ${
 									submitStatus.type === 'success'
 										? 'border-green-500/50 bg-green-900/20 text-green-400'
 										: 'border-red-500/50 bg-red-900/20 text-red-400'
