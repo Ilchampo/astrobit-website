@@ -1,10 +1,12 @@
-import React from 'react';
+import { animate } from 'motion';
+import React, { useRef } from 'react';
 
 import type { CaseStudyDetail } from '@/lib/interfaces/caseStudies.interface';
 
 import { ArrowRightIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+import { BUTTON_HOVER, BUTTON_HOVER_RESET } from '@/lib/constants/motion';
 import Image from 'next/image';
 
 interface CaseStudyCardProps {
@@ -15,9 +17,44 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = props => {
 	const { card } = props;
 
 	const router = useRouter();
+	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	const handleNavigation = () => {
 		router.push(card.path);
+	};
+
+	const handleButtonHover = () => {
+		if (buttonRef.current) {
+			const { duration, easing, ...hoverProps } = BUTTON_HOVER;
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const options: any = {};
+			if (duration !== undefined) {
+				options.duration = duration;
+			}
+
+			if (easing) {
+				options.easing = easing;
+			}
+
+			animate(buttonRef.current, hoverProps, options);
+		}
+	};
+
+	const handleButtonLeave = () => {
+		if (buttonRef.current) {
+			const { duration, easing, ...resetProps } = BUTTON_HOVER_RESET;
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const options: any = {};
+			if (duration !== undefined) {
+				options.duration = duration;
+			}
+
+			if (easing) {
+				options.easing = easing;
+			}
+
+			animate(buttonRef.current, resetProps, options);
+		}
 	};
 
 	return (
@@ -43,7 +80,10 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = props => {
 				<h3 className="font-orbitron mb-3 text-xl font-bold text-[#EDEDED]">{card.title}</h3>
 				<p className="font-exo2 mb-6 text-[#A0A0B2]">{card.description}</p>
 				<button
+					ref={buttonRef}
 					onClick={handleNavigation}
+					onMouseEnter={handleButtonHover}
+					onMouseLeave={handleButtonLeave}
 					className="font-exo2 tech-button flex items-center gap-2 bg-[#FF6A00] px-6 py-2 text-[#EDEDED] transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,106,0,0.3)]"
 				>
 					View Case Study

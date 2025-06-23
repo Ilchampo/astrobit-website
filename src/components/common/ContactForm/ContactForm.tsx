@@ -2,7 +2,10 @@
 
 import type { ContactFormResponse } from '@/lib/interfaces/contact.interface';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { SCROLL_FADE_UP, SCROLL_FADE_UP_DELAYED } from '@/lib/constants/motion';
+import { useScrollAnimation } from '@/lib/utils/useScrollAnimation';
 
 import FormDecorative from '@/components/common/Decoratives/FormDecorative';
 import ModalWrapper from '@/components/common/ModalWrapper/ModalWrapper';
@@ -38,12 +41,32 @@ const ContactForm = () => {
 	const [formData, setFormData] = useState<ContactForm>(INITIAL_STATE);
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(INITIAL_STATUS);
+	const [isStatusVisible, setIsStatusVisible] = useState<boolean>(false);
+
+	const sectionHeaderRef = useScrollAnimation(SCROLL_FADE_UP);
+	const formRef = useScrollAnimation(SCROLL_FADE_UP_DELAYED);
+
+	useEffect(() => {
+		if (submitStatus.type) {
+			setIsStatusVisible(true);
+
+			const timer = setTimeout(() => {
+				setIsStatusVisible(false);
+
+				setTimeout(() => {
+					setSubmitStatus(INITIAL_STATUS);
+				}, 300);
+			}, 3000);
+
+			return () => clearTimeout(timer);
+		}
+	}, [submitStatus.type]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-
 		setIsSubmitting(true);
-		setSubmitStatus({ type: null, message: '' });
+		setSubmitStatus(INITIAL_STATUS);
+		setIsStatusVisible(false);
 
 		try {
 			const response = await fetch('/api/contact', {
@@ -70,7 +93,6 @@ const ContactForm = () => {
 			}
 		} catch (error) {
 			console.error('Form submission error:', error);
-
 			setSubmitStatus({
 				type: 'error',
 				message: 'Something went wrong. Please try again later.',
@@ -84,14 +106,15 @@ const ContactForm = () => {
 		<section id="contact" className="relative w-full overflow-hidden bg-[#0B0F1A] py-24">
 			<FormDecorative />
 			<div className="relative container mx-auto px-4">
-				<SectionHeader
-					title="Let's Talk"
-					description="Tell us about your idea — we'll help you turn it into a real product."
-				/>
-				<div className="mx-auto max-w-2xl">
+				<div ref={sectionHeaderRef} style={{ opacity: 0 }}>
+					<SectionHeader
+						title="Let's Talk"
+						description="Tell us about your idea — we'll help you turn it into a real product."
+					/>
+				</div>
+				<div ref={formRef} className="mx-auto max-w-2xl" style={{ opacity: 0 }}>
 					<form onSubmit={handleSubmit} className="space-y-6">
 						<div className="grid gap-6 md:grid-cols-2">
-							{/* Name Input */}
 							<div className="relative">
 								<input
 									required
@@ -109,7 +132,6 @@ const ContactForm = () => {
 								/>
 								<div className="absolute top-0 right-0 h-6 w-6 border-t border-r border-[#00C9FF]/20"></div>
 							</div>
-							{/* Email Input */}
 							<div className="relative">
 								<input
 									required
@@ -128,7 +150,6 @@ const ContactForm = () => {
 								<div className="absolute top-0 right-0 h-6 w-6 border-t border-r border-[#00C9FF]/20"></div>
 							</div>
 						</div>
-						{/* Company Input */}
 						<div className="relative">
 							<input
 								type="text"
@@ -145,7 +166,6 @@ const ContactForm = () => {
 							/>
 							<div className="border-opacity-20 absolute top-0 right-0 h-6 w-6 border-t border-r border-[#00C9FF]/20"></div>
 						</div>
-						{/* Interest Dropdown */}
 						<div className="relative">
 							<select
 								className={`border-opacity-20 font-exo2 w-full appearance-none border border-[#00C9FF]/20 bg-[#151823] p-3 transition-all duration-300 focus:border-[#00C9FF] focus:shadow-[0_0_15px_rgba(0,201,255,0.3)] focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 ${
@@ -170,7 +190,6 @@ const ContactForm = () => {
 							</select>
 							<div className="border-opacity-20 absolute top-0 right-0 h-6 w-6 border-t border-r border-[#00C9FF]/20"></div>
 						</div>
-						{/* Message Textarea */}
 						<div className="relative">
 							<textarea
 								required
@@ -189,10 +208,11 @@ const ContactForm = () => {
 							<div className="border-opacity-20 absolute top-0 right-0 h-6 w-6 border-t border-r border-[#00C9FF]/20"></div>
 						</div>
 
-						{/* Status Messages */}
 						{submitStatus.type && (
 							<div
-								className={`rounded-lg border p-4 ${
+								className={`rounded-lg border p-4 transition-all duration-300 ease-in-out ${
+									isStatusVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'
+								} ${
 									submitStatus.type === 'success'
 										? 'border-green-500/50 bg-green-900/20 text-green-400'
 										: 'border-red-500/50 bg-red-900/20 text-red-400'
@@ -202,7 +222,6 @@ const ContactForm = () => {
 							</div>
 						)}
 
-						{/* Submit Button */}
 						<div className="space-y-4">
 							<p className="font-exo2 text-center text-xs text-[#A0A0B2]">
 								By clicking &quot;Launch Project&quot;, you agree to our{' '}

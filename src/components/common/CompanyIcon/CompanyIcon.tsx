@@ -32,6 +32,7 @@ const CompanyIcon: React.FC<CompanyIconProps> = props => {
 				alt="Company Icon"
 				width={getCompanyIconSize()}
 				height={getCompanyIconSize()}
+				priority
 			/>
 			{displayName && (
 				<span className={`font-orbitron ${size === 'xs' ? 'text-sm' : 'text-xl'} font-bold text-[#EDEDED]`}>
