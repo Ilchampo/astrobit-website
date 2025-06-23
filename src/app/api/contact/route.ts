@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import {
 	ContactServiceError,
+	DatabaseConnectionError,
 	DuplicateContactError,
 	saveContactForm,
 	ValidationError,
@@ -53,6 +54,17 @@ export async function POST(request: NextRequest) {
 						success: false,
 						message:
 							'You have recently submitted a contact form. Please wait 24 hours before submitting again.',
+					} as ContactFormResponse,
+					{ status: error.statusCode },
+				);
+			}
+
+			if (error instanceof DatabaseConnectionError) {
+				console.error('Database connection error:', error.message);
+				return NextResponse.json(
+					{
+						success: false,
+						message: 'We are experiencing technical difficulties. Please try again in a few moments.',
 					} as ContactFormResponse,
 					{ status: error.statusCode },
 				);
