@@ -1,5 +1,7 @@
-import React from 'react';
+import { animate } from 'motion';
+import React, { useRef } from 'react';
 
+import { CARD_HOVER, CARD_HOVER_RESET } from '@/lib/constants/motion';
 import type { LucideIcon } from 'lucide-react';
 
 type CardAction = {
@@ -19,8 +21,47 @@ interface InfoCardProps {
 const InfoCard: React.FC<InfoCardProps> = props => {
 	const { title, description, highlight, action } = props;
 
+	const cardRef = useRef<HTMLDivElement>(null);
+
+	const handleMouseEnter = () => {
+		if (cardRef.current) {
+			const { duration, easing, ...hoverProps } = CARD_HOVER;
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const options: any = {};
+			if (duration !== undefined) {
+				options.duration = duration;
+			}
+
+			if (easing) {
+				options.easing = easing;
+			}
+
+			animate(cardRef.current, hoverProps, options);
+		}
+	};
+
+	const handleMouseLeave = () => {
+		if (cardRef.current) {
+			const { duration, easing, ...resetProps } = CARD_HOVER_RESET;
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const options: any = {};
+			if (duration !== undefined) {
+				options.duration = duration;
+			}
+
+			if (easing) {
+				options.easing = easing;
+			}
+
+			animate(cardRef.current, resetProps, options);
+		}
+	};
+
 	return (
 		<div
+			ref={cardRef}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
 			className={`group border-opacity-20 relative border bg-[#0B0F1A] p-8 transition-all duration-300 ${highlight ? 'border-opacity-40 border-[#00C9FF]/50 shadow-[0_0_30px_rgba(0,201,255,0.15)] md:scale-105' : 'border-[#00C9FF]/20 hover:shadow-[0_0_30px_rgba(0,201,255,0.1)]'}`}
 		>
 			{highlight && (
