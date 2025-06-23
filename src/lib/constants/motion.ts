@@ -122,12 +122,63 @@ export const GRADIENT_SLIDE = {
 };
 
 export const SCROLL_TRIGGER_OPTIONS = {
-	threshold: 0.1,
-	rootMargin: '0px 0px -50px 0px',
+	threshold: 0.3,
+	rootMargin: '0px 0px -20px 0px',
+};
+
+export const CONSERVATIVE_SCROLL_TRIGGER_OPTIONS = {
+	threshold: 0.5,
+	rootMargin: '0px',
+};
+
+export const STEPPER_FADE_UP = {
+	opacity: [0, 1],
+	y: [40, 0],
+	duration: 0.8,
+	delay: 0.2,
+	easing: 'ease-out',
 };
 
 export const STAGGER_DELAYS = {
 	fast: 0.1,
 	medium: 0.15,
 	slow: 0.2,
+};
+
+export const PAGE_HEADER_ENTRANCE = {
+	container: {
+		opacity: [0, 1],
+		y: [20, 0],
+		duration: 0.8,
+		easing: 'ease-out',
+		delay: 0.1,
+	},
+	title: {
+		opacity: [0, 1],
+		y: [30, 0],
+		duration: 0.8,
+		easing: 'ease-out',
+		delay: 0.3,
+	},
+	subtitle: {
+		opacity: [0, 1],
+		y: [20, 0],
+		duration: 0.8,
+		easing: 'ease-out',
+		delay: 0.5,
+	},
+	button: {
+		opacity: [0, 1],
+		y: [20, 0],
+		duration: 0.6,
+		easing: 'ease-out',
+		delay: 0.7,
+	},
+	techIndicator: {
+		opacity: [0, 1],
+		y: [15, 0],
+		duration: 0.6,
+		easing: 'ease-out',
+		delay: 0.9,
+	},
 };
