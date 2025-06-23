@@ -145,6 +145,44 @@ export const STAGGER_DELAYS = {
 	slow: 0.2,
 };
 
+export const SUB_PAGE_HEADER_ENTRANCE = {
+	container: {
+		opacity: [0, 1],
+		y: [20, 0],
+		duration: 0.8,
+		easing: 'ease-out',
+		delay: 0.1,
+	},
+	breadcrumb: {
+		opacity: [0, 1],
+		y: [20, 0],
+		duration: 0.6,
+		easing: 'ease-out',
+		delay: 0.2,
+	},
+	title: {
+		opacity: [0, 1],
+		y: [30, 0],
+		duration: 0.8,
+		easing: 'ease-out',
+		delay: 0.4,
+	},
+	subtitle: {
+		opacity: [0, 1],
+		y: [20, 0],
+		duration: 0.8,
+		easing: 'ease-out',
+		delay: 0.6,
+	},
+	techIndicator: {
+		opacity: [0, 1],
+		y: [15, 0],
+		duration: 0.6,
+		easing: 'ease-out',
+		delay: 0.8,
+	},
+};
+
 export const PAGE_HEADER_ENTRANCE = {
 	container: {
 		opacity: [0, 1],
