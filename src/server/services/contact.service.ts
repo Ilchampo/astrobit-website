@@ -1,6 +1,6 @@
 import type { ContactFormData } from '@/lib/interfaces/contact.interface';
 
-import { MongoServerError } from 'mongodb';
+import { MongoNetworkError, MongoServerError } from 'mongodb';
 
 import clientPromise from '@/server/database/mongodb';
 
@@ -24,6 +24,13 @@ export class DuplicateContactError extends ContactServiceError {
 export class ValidationError extends ContactServiceError {
 	constructor(message: string) {
 		super(message, 'VALIDATION_ERROR', 400);
+	}
+}
+
+export class DatabaseConnectionError extends ContactServiceError {
+	constructor(originalError: string) {
+		super('Database connection failed. Please try again later.', 'DB_CONNECTION_ERROR', 503);
+		this.cause = originalError;
 	}
 }
 
@@ -95,6 +102,30 @@ const checkForDuplicateSubmission = async (email: string): Promise<void> => {
 		if (error instanceof DuplicateContactError) {
 			throw error;
 		}
+
+		// Handle specific MongoDB connection errors
+		if (error instanceof Error) {
+			const errorMessage = error.message.toLowerCase();
+
+			// SSL/TLS errors
+			if (errorMessage.includes('ssl') || errorMessage.includes('tls') || errorMessage.includes('certificate')) {
+				console.error('MongoDB SSL/TLS error during duplicate check:', error.message);
+				// Don't throw - allow submission to continue
+				return;
+			}
+
+			// Network/connection errors
+			if (
+				errorMessage.includes('network') ||
+				errorMessage.includes('connection') ||
+				errorMessage.includes('timeout')
+			) {
+				console.error('MongoDB network error during duplicate check:', error.message);
+				// Don't throw - allow submission to continue
+				return;
+			}
+		}
+
 		console.error('Error checking for duplicate submissions:', error);
 	}
 };
@@ -131,8 +162,30 @@ export const saveContactForm = async (formData: ContactFormData): Promise<{ id: 
 			timestamp: dataToSave.submittedAt,
 		};
 	} catch (error) {
-		if (error instanceof MongoServerError) {
+		// Handle MongoDB specific errors
+		if (error instanceof MongoServerError || error instanceof MongoNetworkError) {
 			console.error('MongoDB error:', error);
+
+			// Check for specific SSL/TLS errors
+			if (
+				error.message.includes('SSL') ||
+				error.message.includes('TLS') ||
+				error.message.includes('certificate')
+			) {
+				throw new DatabaseConnectionError(
+					'SSL/TLS connection error. Please check your database configuration.',
+				);
+			}
+
+			// Check for network errors
+			if (
+				error.message.includes('network') ||
+				error.message.includes('timeout') ||
+				error.message.includes('connection')
+			) {
+				throw new DatabaseConnectionError('Network connection error. Please try again.');
+			}
+
 			throw new ContactServiceError('Database operation failed', 'DB_ERROR', 500);
 		}
 
@@ -179,8 +232,13 @@ export const getContactFormByEmail = async (email: string): Promise<ContactFormD
 			throw error;
 		}
 
-		if (error instanceof MongoServerError) {
+		if (error instanceof MongoServerError || error instanceof MongoNetworkError) {
 			console.error('MongoDB error in getContactFormByEmail:', error);
+
+			if (error.message.includes('SSL') || error.message.includes('TLS')) {
+				throw new DatabaseConnectionError('SSL/TLS connection error');
+			}
+
 			throw new ContactServiceError('Database query failed', 'DB_QUERY_ERROR', 500);
 		}
 
