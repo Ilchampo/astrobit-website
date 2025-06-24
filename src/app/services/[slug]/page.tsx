@@ -1,5 +1,3 @@
-'use client';
-
 import { SEO_CONFIG } from '@/lib/constants/seo';
 import { SERVICES } from '@/lib/constants/services';
 import {
@@ -48,7 +46,6 @@ export async function generateStaticParams() {
 	}));
 }
 
-// eslint-disable-next-line @next/next/no-async-client-component
 export default async function ServicePage({ params }: ServicePageProps) {
 	const { slug } = await params;
 	const service = SERVICES.find(s => s.slug === slug);

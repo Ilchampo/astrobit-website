@@ -1,7 +1,6 @@
 import type { Service } from '@/lib/interfaces/services.interface';
 
 import { CASE_STUDIES_DETAILS } from '@/lib/constants/caseStudies';
-import { useMemo } from 'react';
 
 import SubPageHeader from '@/components/common/SubPageHeader/SubPageHeader';
 import BenefitsSection from '../BenefitsSection/BenefitsSection';
@@ -14,9 +13,7 @@ interface ServiceContentProps {
 }
 
 const ServiceContent: React.FC<ServiceContentProps> = ({ service }) => {
-	const caseStudies = useMemo(() => {
-		return CASE_STUDIES_DETAILS.filter(study => service.caseStudiesIds?.includes(study.slug));
-	}, [service.caseStudiesIds]);
+	const caseStudies = CASE_STUDIES_DETAILS.filter(study => service.caseStudiesIds?.includes(study.slug));
 
 	return (
 		<div className="w-full bg-[#0B0F1A]">

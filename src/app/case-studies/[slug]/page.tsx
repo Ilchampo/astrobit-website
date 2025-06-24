@@ -1,5 +1,3 @@
-'use client';
-
 import { CASE_STUDIES } from '@/lib/constants/caseStudies';
 import { SEO_CONFIG } from '@/lib/constants/seo';
 import {
@@ -53,7 +51,6 @@ export async function generateStaticParams() {
 	}));
 }
 
-// eslint-disable-next-line @next/next/no-async-client-component
 export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 	const { slug } = await params;
 	const caseStudy = CASE_STUDIES.find(cs => cs.slug === slug);
