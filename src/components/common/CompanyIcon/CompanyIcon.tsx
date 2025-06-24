@@ -29,7 +29,7 @@ const CompanyIcon: React.FC<CompanyIconProps> = props => {
 		<div className="flex items-center justify-center gap-2">
 			<Image
 				src="/images/astrobit-icon.webp"
-				alt="Company Icon"
+				alt="Astrobit - Professional Digital Solutions Agency Logo"
 				width={getCompanyIconSize()}
 				height={getCompanyIconSize()}
 				priority

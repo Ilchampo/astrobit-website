@@ -1,40 +1,77 @@
-'use client';
-
-import type { CaseStudyDetail } from '@/lib/interfaces/caseStudies.interface';
-import type { Service } from '@/lib/interfaces/services.interface';
-
-import { CASE_STUDIES_DETAILS } from '@/lib/constants/caseStudies';
+import { SEO_CONFIG } from '@/lib/constants/seo';
 import { SERVICES } from '@/lib/constants/services';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import {
+	generateBreadcrumbStructuredData,
+	generateMetadata as generateSEOMetadata,
+	generateServiceStructuredData,
+} from '@/lib/utils/seo';
+import { notFound } from 'next/navigation';
 
-import SubPageHeader from '@/components/common/SubPageHeader/SubPageHeader';
-import BenefitsSection from './components/BenefitsSection/BenefitsSection';
-import CaseStudySection from './components/CaseStudySection/CaseStudySection';
-import DescriptionSection from './components/DescriptionSection/DescriptionSection';
-import ProcessSection from './components/ProcessSection/ProcressSection';
+import ServiceContent from './components/ServiceContent/ServiceContent';
 
-export default function Home() {
-	const [service, setService] = useState<Service | undefined>(undefined);
-	const [caseStudies, setCaseStudies] = useState<CaseStudyDetail[]>([]);
+interface ServicePageProps {
+	params: Promise<{ slug: string }>;
+}
 
-	const { slug } = useParams();
+export async function generateMetadata({ params }: ServicePageProps) {
+	const { slug } = await params;
+	const service = SERVICES.find(s => s.slug === slug);
 
-	useEffect(() => {
-		const service = SERVICES.find(service => service.slug === slug);
-		const caseStudies = CASE_STUDIES_DETAILS.filter(study => service?.caseStudiesIds?.includes(study.slug));
+	if (!service) {
+		return generateSEOMetadata({
+			title: 'Service Not Found | Astrobit',
+			description: 'The requested service could not be found.',
+		});
+	}
 
-		setService(service);
-		setCaseStudies(caseStudies);
-	}, [slug]);
+	return generateSEOMetadata({
+		title: `${service.title} - Professional Development Services | Astrobit`,
+		description: service.description,
+		keywords: [
+			service.title.toLowerCase(),
+			'web development',
+			'digital solutions',
+			'custom development',
+			'professional services',
+			'Astrobit',
+		],
+		url: `${SEO_CONFIG.siteUrl}/services/${service.slug}`,
+		image: `${SEO_CONFIG.siteUrl}/images/services/${service.slug}.png`,
+	});
+}
 
-	return service ? (
-		<div className="w-full bg-[#0B0F1A]">
-			<SubPageHeader title={service.title} subtitle={service.subtitle} />
-			<DescriptionSection description={service.description} />
-			<BenefitsSection title="Key Benefits" benefits={service.benefits} />
-			<ProcessSection title="How We Build It" steps={service.steps} />
-			<CaseStudySection caseStudies={caseStudies} />
-		</div>
-	) : null;
+export async function generateStaticParams() {
+	return SERVICES.map(service => ({
+		slug: service.slug,
+	}));
+}
+
+export default async function ServicePage({ params }: ServicePageProps) {
+	const { slug } = await params;
+	const service = SERVICES.find(s => s.slug === slug);
+
+	if (!service) {
+		notFound();
+	}
+
+	const serviceStructuredData = generateServiceStructuredData({
+		name: service.title,
+		description: service.description,
+		url: `${SEO_CONFIG.siteUrl}/services/${service.slug}`,
+		image: `${SEO_CONFIG.siteUrl}/images/services/${service.slug}.png`,
+	});
+
+	const breadcrumbStructuredData = generateBreadcrumbStructuredData([
+		{ name: 'Home', url: SEO_CONFIG.siteUrl },
+		{ name: 'Services', url: `${SEO_CONFIG.siteUrl}/services` },
+		{ name: service.title, url: `${SEO_CONFIG.siteUrl}/services/${service.slug}` },
+	]);
+
+	return (
+		<>
+			<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serviceStructuredData }} />
+			<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumbStructuredData }} />
+			<ServiceContent service={service} />
+		</>
+	);
 }

@@ -1,20 +1,18 @@
 import type { Differentiator } from '@/lib/interfaces/differentiators.interface';
 
-import { CodeIcon, EyeIcon, ZapIcon } from 'lucide-react';
-
 export const DIFFERENTIATORS: Differentiator[] = [
 	{
-		icon: ZapIcon,
+		icon: 'Zap',
 		title: 'Speed',
 		description: 'Launch faster with focused, efficient development.',
 	},
 	{
-		icon: EyeIcon,
+		icon: 'Eye',
 		title: 'Clarity',
 		description: 'Clear communication and transparent process from start to finish.',
 	},
 	{
-		icon: CodeIcon,
+		icon: 'Code',
 		title: 'Custom Code',
 		description: 'Tailored, scalable solutions — no bloated templates or shortcuts.',
 	},

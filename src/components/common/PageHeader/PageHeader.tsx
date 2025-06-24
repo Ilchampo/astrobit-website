@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import { BUTTON_HOVER, BUTTON_HOVER_RESET, PAGE_HEADER_ENTRANCE } from '@/lib/constants/motion';

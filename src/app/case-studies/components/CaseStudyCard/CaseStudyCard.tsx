@@ -1,12 +1,15 @@
-import { animate } from 'motion';
-import React, { useRef } from 'react';
+'use client';
+
+import React from 'react';
 
 import type { CaseStudyDetail } from '@/lib/interfaces/caseStudies.interface';
 
-import { ArrowRightIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-
 import { BUTTON_HOVER, BUTTON_HOVER_RESET } from '@/lib/constants/motion';
+import { ArrowRightIcon } from 'lucide-react';
+import { animate } from 'motion';
+import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
+
 import Image from 'next/image';
 
 interface CaseStudyCardProps {
@@ -26,8 +29,10 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = props => {
 	const handleButtonHover = () => {
 		if (buttonRef.current) {
 			const { duration, easing, ...hoverProps } = BUTTON_HOVER;
+
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const options: any = {};
+
 			if (duration !== undefined) {
 				options.duration = duration;
 			}
@@ -43,8 +48,10 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = props => {
 	const handleButtonLeave = () => {
 		if (buttonRef.current) {
 			const { duration, easing, ...resetProps } = BUTTON_HOVER_RESET;
+
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const options: any = {};
+
 			if (duration !== undefined) {
 				options.duration = duration;
 			}

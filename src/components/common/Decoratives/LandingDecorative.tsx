@@ -1,4 +1,6 @@
-const LandingDecorative = () => (
+import React from 'react';
+
+const LandingDecorative: React.FC = () => (
 	<>
 		{/* Starfield background */}
 		<div className="starfield absolute inset-0 opacity-30"></div>

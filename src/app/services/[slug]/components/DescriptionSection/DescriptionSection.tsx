@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import { SCROLL_FADE_UP } from '@/lib/constants/motion';

@@ -1,8 +1,13 @@
-import { animate } from 'motion';
-import React, { useRef } from 'react';
+'use client';
+
+import React from 'react';
+
+import type { LucideIcon } from 'lucide-react';
 
 import { CARD_HOVER, CARD_HOVER_RESET } from '@/lib/constants/motion';
-import type { LucideIcon } from 'lucide-react';
+import { getIcon } from '@/lib/utils/iconMapper';
+import { animate } from 'motion';
+import { useRef } from 'react';
 
 type CardAction = {
 	label: string;
@@ -11,7 +16,7 @@ type CardAction = {
 };
 
 interface InfoCardProps {
-	icon?: LucideIcon;
+	icon?: string | LucideIcon;
 	title: string;
 	description: string;
 	highlight?: string;
@@ -23,11 +28,15 @@ const InfoCard: React.FC<InfoCardProps> = props => {
 
 	const cardRef = useRef<HTMLDivElement>(null);
 
+	const IconComponent = typeof props.icon === 'string' ? getIcon(props.icon) : props.icon;
+
 	const handleMouseEnter = () => {
 		if (cardRef.current) {
 			const { duration, easing, ...hoverProps } = CARD_HOVER;
+
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const options: any = {};
+
 			if (duration !== undefined) {
 				options.duration = duration;
 			}
@@ -43,8 +52,10 @@ const InfoCard: React.FC<InfoCardProps> = props => {
 	const handleMouseLeave = () => {
 		if (cardRef.current) {
 			const { duration, easing, ...resetProps } = CARD_HOVER_RESET;
+
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const options: any = {};
+
 			if (duration !== undefined) {
 				options.duration = duration;
 			}
@@ -77,8 +88,8 @@ const InfoCard: React.FC<InfoCardProps> = props => {
 			></div>
 			<div className="tech-grid absolute inset-0 opacity-5"></div>
 			<div className="relative">
-				{props.icon && (
-					<props.icon className={`mb-6 h-12 w-12 ${highlight ? 'text-[#FF6A00]' : 'text-[#00C9FF]'}`} />
+				{IconComponent && (
+					<IconComponent className={`mb-6 h-12 w-12 ${highlight ? 'text-[#FF6A00]' : 'text-[#00C9FF]'}`} />
 				)}
 				<h3 className="font-orbitron mb-4 text-xl font-bold text-[#EDEDED]">{title}</h3>
 				<p className="font-exo2 text-[#A0A0B2]">{description}</p>

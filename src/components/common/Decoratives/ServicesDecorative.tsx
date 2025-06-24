@@ -1,4 +1,6 @@
-const ServicesDecorative = () => (
+import React from 'react';
+
+const ServicesDecorative: React.FC = () => (
 	<>
 		{/* Background Elements */}
 		<div className="tech-grid absolute inset-0 opacity-10"></div>

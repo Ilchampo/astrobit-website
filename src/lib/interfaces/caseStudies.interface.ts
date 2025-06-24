@@ -1,7 +1,5 @@
-import type { LucideIcon } from 'lucide-react';
-
 export interface CaseStudyCard {
-	icon: LucideIcon;
+	icon: string;
 	title: string;
 	description: string;
 	featured: boolean;
@@ -19,7 +17,7 @@ export interface CaseStudyDetail {
 }
 
 export interface CaseStudyServices {
-	icon: LucideIcon;
+	icon: string;
 	title: string;
 }
 

@@ -1,9 +1,10 @@
 'use client';
 
-import { animate } from 'motion';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import { SUB_PAGE_HEADER_ENTRANCE } from '@/lib/constants/motion';
+import { animate } from 'motion';
+import { useEffect, useRef } from 'react';
 
 import BreadCrumb from '@/components/common/BreadCrumb/BreadCrumb';
 import SubPageHeaderDecorative from '@/components/common/Decoratives/SubPageHeaderDecorative';
