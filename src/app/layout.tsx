@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 
 import { NAVIGATION_ITEMS } from '@/lib/constants/navigation';
 import { generateStructuredData } from '@/lib/utils/seo';
+import { Analytics } from '@vercel/analytics/next';
 import { Exo_2, Orbitron } from 'next/font/google';
 
 import ContactForm from '@/components/common/ContactForm/ContactForm';
@@ -104,6 +105,7 @@ export default function RootLayout({
 
 	return (
 		<html lang="en">
+			<Analytics />
 			<head>
 				<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationStructuredData }} />
 				<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: websiteStructuredData }} />
