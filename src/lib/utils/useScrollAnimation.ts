@@ -1,3 +1,5 @@
+'use client';
+
 import { SCROLL_TRIGGER_OPTIONS } from '@/lib/constants/motion';
 import { animate } from 'motion';
 import { useEffect, useRef } from 'react';

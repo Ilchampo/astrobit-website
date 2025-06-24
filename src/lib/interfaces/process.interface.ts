@@ -1,7 +1,5 @@
-import type { LucideIcon } from 'lucide-react';
-
 export interface ProcessStep {
-	icon: LucideIcon;
+	icon: string;
 	title: string;
 	description: string;
 }

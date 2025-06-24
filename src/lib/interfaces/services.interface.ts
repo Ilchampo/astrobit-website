@@ -1,5 +1,4 @@
 import type { ProcessStep } from '@/lib/interfaces/process.interface';
-import type { LucideIcon } from 'lucide-react';
 
 type ServiceCardAction = {
 	label: string;
@@ -7,7 +6,7 @@ type ServiceCardAction = {
 };
 
 export interface ServiceCard {
-	icon: LucideIcon;
+	icon: string;
 	title: string;
 	description: string;
 	action: ServiceCardAction;
@@ -15,7 +14,7 @@ export interface ServiceCard {
 }
 
 export interface ServiceBenefit {
-	icon: LucideIcon;
+	icon: string;
 	title: string;
 	description: string;
 }

@@ -1,7 +1,10 @@
+'use client';
+
 import React from 'react';
 
 import type { LucideIcon } from 'lucide-react';
 
+import { getIcon } from '@/lib/utils/iconMapper';
 import { ArrowRightIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -9,7 +12,7 @@ import CompanyLogo from '@/components/common/CompanyLogo/CompanyLogo';
 import Image from 'next/image';
 
 interface ContentCardProps {
-	icon: LucideIcon;
+	icon: string | LucideIcon;
 	title: string;
 	description: string;
 	path: string;
@@ -22,6 +25,8 @@ const ContentCard: React.FC<ContentCardProps> = props => {
 
 	const router = useRouter();
 
+	const IconComponent = typeof props.icon === 'string' ? getIcon(props.icon) : props.icon;
+
 	return (
 		<div className="group border-opacity-20 relative mb-12 border border-[#00C9FF]/20 bg-[#0B0F1A] p-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,201,255,0.15)]">
 			<div className="absolute top-0 right-0 h-12 w-12 border-t-2 border-r-2 border-[#00C9FF] opacity-30"></div>
@@ -30,7 +35,7 @@ const ContentCard: React.FC<ContentCardProps> = props => {
 			<div className={`relative grid items-center gap-8 ${featured ? 'md:grid-cols-2' : ''}`}>
 				<div>
 					<CompanyLogo className="mb-6">
-						<props.icon className="h-6 w-6" />
+						<IconComponent className="h-6 w-6" />
 					</CompanyLogo>
 					<h3 className={`font-orbitron mb-4 ${featured ? 'text-2xl' : 'text-xl'} font-bold text-[#EDEDED]`}>
 						{title}

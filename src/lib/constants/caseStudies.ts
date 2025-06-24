@@ -1,10 +1,8 @@
 import type { CaseStudy, CaseStudyCard, CaseStudyDetail } from '@/lib/interfaces/caseStudies.interface';
 
-import { ChartLine, Code, Droplets, Globe, PenTool, Server, ShieldCheck, Smartphone, Truck } from 'lucide-react';
-
 export const CASE_STUDIES_CARDS: CaseStudyCard[] = [
 	{
-		icon: Truck,
+		icon: 'Truck',
 		title: 'Garosa Dist - Distributor Web App',
 		description:
 			'A mobile-first web app with offline support built for field distributors. Designed for speed, reliability, and real-world use.',
@@ -13,14 +11,14 @@ export const CASE_STUDIES_CARDS: CaseStudyCard[] = [
 		image: '/images/case-studies/garosa-dist.png',
 	},
 	{
-		icon: ShieldCheck,
+		icon: 'ShieldCheck',
 		title: 'Llegar a Casa',
 		description: 'A social-impact web app using public data to help people get home safely in Ecuador.',
 		featured: false,
 		path: '/case-studies/llegar-casa',
 	},
 	{
-		icon: Droplets,
+		icon: 'Droplets',
 		title: 'Insepet',
 		description: "A clean, multilingual landing page that modernized an Ecuadorian company's online image.",
 		featured: false,
@@ -89,10 +87,10 @@ export const CASE_STUDIES: CaseStudy[] = [
 			'Delivered as a robust PWA with offline functionality for field use',
 		],
 		services: [
-			{ icon: Code, title: 'Web Application' },
-			{ icon: PenTool, title: 'UI/UX Design' },
-			{ icon: Server, title: 'Backend Development' },
-			{ icon: Smartphone, title: 'Offline Support' },
+			{ icon: 'Code', title: 'Web Application' },
+			{ icon: 'PenTool', title: 'UI/UX Design' },
+			{ icon: 'Server', title: 'Backend Development' },
+			{ icon: 'Smartphone', title: 'Offline Support' },
 		],
 	},
 	{
@@ -111,10 +109,10 @@ export const CASE_STUDIES: CaseStudy[] = [
 			'Prepared the firm for expansion to Quito and Latin American markets',
 		],
 		services: [
-			{ icon: Globe, title: 'Multilingual' },
-			{ icon: PenTool, title: 'UI/UX Design' },
-			{ icon: Code, title: 'Frontend Development' },
-			{ icon: Server, title: 'Deployment' },
+			{ icon: 'Globe', title: 'Multilingual' },
+			{ icon: 'PenTool', title: 'UI/UX Design' },
+			{ icon: 'Code', title: 'Frontend Development' },
+			{ icon: 'Server', title: 'Deployment' },
 		],
 	},
 	{
@@ -126,17 +124,17 @@ export const CASE_STUDIES: CaseStudy[] = [
 		challenge:
 			'Relying solely on social media made it difficult for new students to discover the gym or get basic information like class schedules or coach credentials.',
 		solution:
-			'Astrobit developed a responsive, fast-loading landing page that showcased the academy’s classes, instructors, testimonials, and contact info in a clean and mobile-first layout.',
+			"Astrobit developed a responsive, fast-loading landing page that showcased the academy's classes, instructors, testimonials, and contact info in a clean and mobile-first layout.",
 		results: [
 			'Increased inquiries and sign-ups within the first month',
 			'Enhanced visibility and accessibility for new students',
 			'Created a centralized digital presence beyond social media',
 		],
 		services: [
-			{ icon: ChartLine, title: 'Analytics' },
-			{ icon: PenTool, title: 'UI/UX Design' },
-			{ icon: Code, title: 'Frontend Development' },
-			{ icon: Server, title: 'Deployment' },
+			{ icon: 'ChartLine', title: 'Analytics' },
+			{ icon: 'PenTool', title: 'UI/UX Design' },
+			{ icon: 'Code', title: 'Frontend Development' },
+			{ icon: 'Server', title: 'Deployment' },
 		],
 	},
 	{
@@ -148,17 +146,17 @@ export const CASE_STUDIES: CaseStudy[] = [
 		challenge:
 			'Despite years of operation and international clients, Insepet had no web presence, which affected trust and made it harder to win proposals or present services digitally.',
 		solution:
-			'Astrobit delivered a multilingual, corporate landing page that highlighted Insepet’s certifications, service areas, and track record. The site was crafted for professionalism and scalability.',
+			"Astrobit delivered a multilingual, corporate landing page that highlighted Insepet's certifications, service areas, and track record. The site was crafted for professionalism and scalability.",
 		results: [
 			'Strengthened brand image across Latin American markets',
 			'Enabled easier communication during RFPs and commercial meetings',
 			'Positioned Insepet as a mature and globally-ready firm',
 		],
 		services: [
-			{ icon: Globe, title: 'Multilingual' },
-			{ icon: PenTool, title: 'UI/UX Design' },
-			{ icon: Code, title: 'Frontend Development' },
-			{ icon: Server, title: 'Deployment' },
+			{ icon: 'Globe', title: 'Multilingual' },
+			{ icon: 'PenTool', title: 'UI/UX Design' },
+			{ icon: 'Code', title: 'Frontend Development' },
+			{ icon: 'Server', title: 'Deployment' },
 		],
 	},
 	{
@@ -174,13 +172,13 @@ export const CASE_STUDIES: CaseStudy[] = [
 		results: [
 			'Launched in May 2025 with growing traction and public use',
 			'130+ unique users and over 500 safety checks performed',
-			'Demonstrated Astrobit’s social impact focus and technical agility',
+			"Demonstrated Astrobit's social impact focus and technical agility",
 		],
 		services: [
-			{ icon: Code, title: 'Backend Development' },
-			{ icon: PenTool, title: 'UI/UX Design' },
-			{ icon: Code, title: 'Frontend Development' },
-			{ icon: Server, title: 'Deployment' },
+			{ icon: 'Code', title: 'Backend Development' },
+			{ icon: 'PenTool', title: 'UI/UX Design' },
+			{ icon: 'Code', title: 'Frontend Development' },
+			{ icon: 'Server', title: 'Deployment' },
 		],
 	},
 ];
