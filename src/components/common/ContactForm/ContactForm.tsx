@@ -225,7 +225,7 @@ const ContactForm = () => {
 
 						<div className="space-y-4">
 							<p className="font-exo2 text-center text-xs text-[#A0A0B2]">
-								By clicking &quot;Launch Project&quot;, you agree to our{' '}
+								By clicking &quot;Submit&quot;, you agree to our{' '}
 								<button
 									type="button"
 									onClick={() => setIsModalOpen(true)}
@@ -240,7 +240,7 @@ const ContactForm = () => {
 									disabled={isSubmitting}
 									className="font-orbitron tech-button bg-[#FF6A00] px-12 py-4 tracking-wider text-[#EDEDED] transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,106,0,0.3)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:shadow-none"
 								>
-									{isSubmitting ? 'Launching...' : 'Launch Project'}
+									{isSubmitting ? 'Submitting...' : 'Submit'}
 								</button>
 							</div>
 						</div>
