@@ -73,7 +73,7 @@ const InfoCard: React.FC<InfoCardProps> = props => {
 			ref={cardRef}
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
-			className={`group border-opacity-20 relative border bg-[#0B0F1A] p-8 transition-all duration-300 ${highlight ? 'border-opacity-40 border-[#00C9FF]/50 shadow-[0_0_30px_rgba(0,201,255,0.15)] md:scale-105' : 'border-[#00C9FF]/20 hover:shadow-[0_0_30px_rgba(0,201,255,0.1)]'}`}
+			className={`group border-opacity-20 relative flex h-full flex-col border bg-[#0B0F1A] p-8 transition-all duration-300 ${highlight ? 'border-opacity-40 border-[#00C9FF]/50 shadow-[0_0_30px_rgba(0,201,255,0.15)] md:scale-105' : 'border-[#00C9FF]/20 hover:shadow-[0_0_30px_rgba(0,201,255,0.1)]'}`}
 		>
 			{highlight && (
 				<div className="font-orbitron tech-button absolute -top-4 left-1/2 -translate-x-1/2 bg-[#FF6A00] px-4 py-1 text-sm text-[#EDEDED]">
