@@ -1,15 +1,15 @@
 'use client';
 
-import { animate } from 'motion';
-import React, { useRef } from 'react';
+import React from 'react';
 
 import type { CaseStudyDetail } from '@/lib/interfaces/caseStudies.interface';
 
-import { ArrowRightIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-
 import { BUTTON_HOVER, BUTTON_HOVER_RESET, CARD_STAGGER, STAGGER_DELAYS } from '@/lib/constants/motion';
 import { useStaggeredScrollAnimation } from '@/lib/utils/useScrollAnimation';
+import { ArrowRightIcon } from 'lucide-react';
+import { animate } from 'motion';
+import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
 
 interface CaseStudySectionProps {
 	caseStudies: CaseStudyDetail[];
@@ -27,8 +27,10 @@ const CaseStudySection: React.FC<CaseStudySectionProps> = props => {
 		const button = buttonRefs.current[index];
 		if (button) {
 			const { duration, easing, ...hoverProps } = BUTTON_HOVER;
+
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const options: any = {};
+
 			if (duration !== undefined) {
 				options.duration = duration;
 			}
@@ -45,8 +47,10 @@ const CaseStudySection: React.FC<CaseStudySectionProps> = props => {
 		const button = buttonRefs.current[index];
 		if (button) {
 			const { duration, easing, ...resetProps } = BUTTON_HOVER_RESET;
+
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const options: any = {};
+
 			if (duration !== undefined) {
 				options.duration = duration;
 			}

@@ -2,12 +2,11 @@ import React from 'react';
 
 import type { CaseStudy } from '@/lib/interfaces/caseStudies.interface';
 
-import { BarChartIcon, CodeIcon, HelpCircleIcon, InfoIcon, LightbulbIcon } from 'lucide-react';
-
 import { CARD_STAGGER, SCROLL_FADE_UP, STAGGER_DELAYS } from '@/lib/constants/motion';
 import { useScrollAnimation, useStaggeredScrollAnimation } from '@/lib/utils/useScrollAnimation';
-import Image from 'next/image';
+import { BarChartIcon, CodeIcon, HelpCircleIcon, InfoIcon, LightbulbIcon } from 'lucide-react';
 
+import Image from 'next/image';
 import SimpleStudyCard from '../SimpleStudyCard/SimpleCard';
 
 interface StudyContentProps {

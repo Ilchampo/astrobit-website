@@ -1,7 +1,8 @@
-import { animate } from 'motion';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import { TECH_PULSE } from '@/lib/constants/motion';
+import { animate } from 'motion';
+import { useEffect, useRef } from 'react';
 
 interface TechIndicatorProps {
 	tech: string;
@@ -18,6 +19,7 @@ const TechIndicator: React.FC<TechIndicatorProps> = props => {
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const options: any = {};
+
 			if (duration !== undefined) {
 				options.duration = duration;
 			}

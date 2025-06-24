@@ -2,10 +2,9 @@ import React from 'react';
 
 import type { ServiceCard } from '@/lib/interfaces/services.interface';
 
-import { useRouter } from 'next/navigation';
-
 import { CARD_STAGGER, SCROLL_FADE_UP, STAGGER_DELAYS } from '@/lib/constants/motion';
 import { useScrollAnimation, useStaggeredScrollAnimation } from '@/lib/utils/useScrollAnimation';
+import { useRouter } from 'next/navigation';
 
 import ServicesDecorative from '@/components/common/Decoratives/ServicesDecorative';
 import InfoCard from '@/components/common/InfoCard/InfoCard';

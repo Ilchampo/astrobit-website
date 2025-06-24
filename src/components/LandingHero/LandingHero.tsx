@@ -1,8 +1,9 @@
-import { animate } from 'motion';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import { BUTTON_HOVER, BUTTON_HOVER_RESET, HERO_ENTRANCE } from '@/lib/constants/motion';
 import { smoothScroll } from '@/lib/utils/smoothScroll';
+import { animate } from 'motion';
+import { useEffect, useRef } from 'react';
 
 import CompanyIcon from '@/components/common/CompanyIcon/CompanyIcon';
 import LandingDecorative from '@/components/common/Decoratives/LandingDecorative';

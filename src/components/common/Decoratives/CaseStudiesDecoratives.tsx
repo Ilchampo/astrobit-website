@@ -1,3 +1,5 @@
+import React from 'react';
+
 const CaseStudiesDecoratives: React.FC = () => (
 	<>
 		{/* Background Elements */}

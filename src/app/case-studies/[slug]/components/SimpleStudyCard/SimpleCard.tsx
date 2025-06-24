@@ -1,9 +1,10 @@
-import { animate } from 'motion';
-import React, { useRef } from 'react';
+import React from 'react';
 
 import type { LucideIcon } from 'lucide-react';
 
 import { CARD_HOVER, CARD_HOVER_RESET } from '@/lib/constants/motion';
+import { animate } from 'motion';
+import { useRef } from 'react';
 
 interface SimpleCardProps {
 	icon: LucideIcon;
@@ -18,8 +19,10 @@ const SimpleStudyCard: React.FC<SimpleCardProps> = props => {
 	const handleMouseEnter = () => {
 		if (cardRef.current) {
 			const { duration, easing, ...hoverProps } = CARD_HOVER;
+
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const options: any = {};
+
 			if (duration !== undefined) {
 				options.duration = duration;
 			}
@@ -35,8 +38,10 @@ const SimpleStudyCard: React.FC<SimpleCardProps> = props => {
 	const handleMouseLeave = () => {
 		if (cardRef.current) {
 			const { duration, easing, ...resetProps } = CARD_HOVER_RESET;
+
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const options: any = {};
+
 			if (duration !== undefined) {
 				options.duration = duration;
 			}

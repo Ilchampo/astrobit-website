@@ -1,11 +1,12 @@
 'use client';
 
-import type { ContactFormResponse } from '@/lib/interfaces/contact.interface';
+import React from 'react';
 
-import { useEffect, useState } from 'react';
+import type { ContactFormResponse } from '@/lib/interfaces/contact.interface';
 
 import { SCROLL_FADE_UP, SCROLL_FADE_UP_DELAYED } from '@/lib/constants/motion';
 import { useScrollAnimation } from '@/lib/utils/useScrollAnimation';
+import { useEffect, useState } from 'react';
 
 import FormDecorative from '@/components/common/Decoratives/FormDecorative';
 import ModalWrapper from '@/components/common/ModalWrapper/ModalWrapper';

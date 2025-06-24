@@ -1,4 +1,6 @@
-const DifferentiatorsDecorative = () => (
+import React from 'react';
+
+const DifferentiatorsDecorative: React.FC = () => (
 	<>
 		{/* Background Elements */}
 		<div className="tech-grid absolute inset-0 opacity-10"></div>

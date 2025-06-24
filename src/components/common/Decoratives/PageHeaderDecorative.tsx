@@ -1,3 +1,5 @@
+import React from 'react';
+
 const PageHeaderDecorative: React.FC = () => (
 	<>
 		{/* Tech grid background */}
