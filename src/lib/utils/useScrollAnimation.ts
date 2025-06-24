@@ -25,56 +25,68 @@ export const useScrollAnimation = (animationConfig: AnimationConfig, triggerOnce
 			return;
 		}
 
+		const triggerAnimation = () => {
+			if (!hasAnimated.current || !triggerOnce) {
+				const { delay, duration, easing, repeat, ...animationProps } = animationConfig;
+
+				const cleanAnimationProps: Record<string, number[]> = {};
+				if (animationProps.opacity) {
+					cleanAnimationProps.opacity = animationProps.opacity;
+				}
+
+				if (animationProps.y) {
+					cleanAnimationProps.y = animationProps.y;
+				}
+
+				if (animationProps.x) {
+					cleanAnimationProps.x = animationProps.x;
+				}
+
+				if (animationProps.scale) {
+					cleanAnimationProps.scale = animationProps.scale;
+				}
+
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const animationOptions: any = {};
+
+				if (duration !== undefined) {
+					animationOptions.duration = duration;
+				}
+
+				if (easing) {
+					animationOptions.easing = easing;
+				}
+
+				if (repeat !== undefined) {
+					animationOptions.repeat = repeat;
+				}
+
+				if (delay) {
+					setTimeout(() => animate(element, cleanAnimationProps, animationOptions), delay * 1000);
+				} else {
+					animate(element, cleanAnimationProps, animationOptions);
+				}
+
+				hasAnimated.current = true;
+			}
+		};
+
 		const observer = new IntersectionObserver(entries => {
 			entries.forEach(entry => {
 				if (entry.isIntersecting) {
-					if (!hasAnimated.current || !triggerOnce) {
-						const { delay, duration, easing, repeat, ...animationProps } = animationConfig;
-
-						const cleanAnimationProps: Record<string, number[]> = {};
-						if (animationProps.opacity) {
-							cleanAnimationProps.opacity = animationProps.opacity;
-						}
-
-						if (animationProps.y) {
-							cleanAnimationProps.y = animationProps.y;
-						}
-
-						if (animationProps.x) {
-							cleanAnimationProps.x = animationProps.x;
-						}
-
-						if (animationProps.scale) {
-							cleanAnimationProps.scale = animationProps.scale;
-						}
-
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						const animationOptions: any = {};
-						if (duration !== undefined) {
-							animationOptions.duration = duration;
-						}
-
-						if (easing) {
-							animationOptions.easing = easing;
-						}
-
-						if (repeat !== undefined) {
-							animationOptions.repeat = repeat;
-						}
-
-						if (delay) {
-							setTimeout(() => animate(element, cleanAnimationProps, animationOptions), delay * 1000);
-						} else {
-							animate(element, cleanAnimationProps, animationOptions);
-						}
-
-						hasAnimated.current = true;
-					}
+					triggerAnimation();
 				}
 			});
 		}, SCROLL_TRIGGER_OPTIONS);
 
 		observer.observe(element);
+
+		const rect = element.getBoundingClientRect();
+		const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+
+		if (isInView) {
+			triggerAnimation();
+		}
 
 		return () => observer.disconnect();
 	}, [animationConfig, triggerOnce]);
@@ -96,64 +108,73 @@ export const useStaggeredScrollAnimation = (
 			return;
 		}
 
+		const triggerStaggeredAnimation = () => {
+			if (!hasAnimated.current || !triggerOnce) {
+				const children = Array.from(container.children) as HTMLElement[];
+				const { delay: baseDelay, duration, easing, repeat, ...animationProps } = animationConfig;
+
+				children.forEach((child, index) => {
+					const totalDelay = (baseDelay || 0) + index * staggerDelay;
+
+					const cleanAnimationProps: Record<string, number[]> = {};
+					if (animationProps.opacity) {
+						cleanAnimationProps.opacity = animationProps.opacity;
+					}
+
+					if (animationProps.y) {
+						cleanAnimationProps.y = animationProps.y;
+					}
+
+					if (animationProps.x) {
+						cleanAnimationProps.x = animationProps.x;
+					}
+
+					if (animationProps.scale) {
+						cleanAnimationProps.scale = animationProps.scale;
+					}
+
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					const animationOptions: any = {};
+
+					if (duration !== undefined) {
+						animationOptions.duration = duration;
+					}
+
+					if (easing) {
+						animationOptions.easing = easing;
+					}
+
+					if (repeat !== undefined) {
+						animationOptions.repeat = repeat;
+					}
+
+					if (totalDelay > 0) {
+						setTimeout(() => animate(child, cleanAnimationProps, animationOptions), totalDelay * 1000);
+					} else {
+						animate(child, cleanAnimationProps, animationOptions);
+					}
+				});
+
+				hasAnimated.current = true;
+			}
+		};
+
 		const observer = new IntersectionObserver(entries => {
 			entries.forEach(entry => {
 				if (entry.isIntersecting) {
-					if (!hasAnimated.current || !triggerOnce) {
-						const children = Array.from(container.children) as HTMLElement[];
-						const { delay: baseDelay, duration, easing, repeat, ...animationProps } = animationConfig;
-
-						children.forEach((child, index) => {
-							const totalDelay = (baseDelay || 0) + index * staggerDelay;
-
-							const cleanAnimationProps: Record<string, number[]> = {};
-							if (animationProps.opacity) {
-								cleanAnimationProps.opacity = animationProps.opacity;
-							}
-
-							if (animationProps.y) {
-								cleanAnimationProps.y = animationProps.y;
-							}
-
-							if (animationProps.x) {
-								cleanAnimationProps.x = animationProps.x;
-							}
-
-							if (animationProps.scale) {
-								cleanAnimationProps.scale = animationProps.scale;
-							}
-
-							// eslint-disable-next-line @typescript-eslint/no-explicit-any
-							const animationOptions: any = {};
-							if (duration !== undefined) {
-								animationOptions.duration = duration;
-							}
-
-							if (easing) {
-								animationOptions.easing = easing;
-							}
-
-							if (repeat !== undefined) {
-								animationOptions.repeat = repeat;
-							}
-
-							if (totalDelay > 0) {
-								setTimeout(
-									() => animate(child, cleanAnimationProps, animationOptions),
-									totalDelay * 1000,
-								);
-							} else {
-								animate(child, cleanAnimationProps, animationOptions);
-							}
-						});
-
-						hasAnimated.current = true;
-					}
+					triggerStaggeredAnimation();
 				}
 			});
 		}, SCROLL_TRIGGER_OPTIONS);
 
 		observer.observe(container);
+
+		const rect = container.getBoundingClientRect();
+		const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+
+		if (isInView) {
+			triggerStaggeredAnimation();
+		}
 
 		return () => observer.disconnect();
 	}, [animationConfig, staggerDelay, triggerOnce]);
